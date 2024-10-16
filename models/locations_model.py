@@ -1,4 +1,3 @@
-# models.py
 from db import get_connection
 import json
 
