@@ -1,16 +1,27 @@
-import psycopg2
-from psycopg2 import sql
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models.users import Base as UsersBase
+from models.locations import Base as LocationsBase
+from models.parking_spaces import Base as ParkingSpaces
+from models.transactions import Base as Transactions
 
-def get_connection():
+POSTGRES_USER = 'Note'
+POSTGRES_PASSWORD = 'Love1234'
+POSTGRES_DB = 'ParkingDB'
+POSTGRES_HOST = 'localhost'
+
+DATABASE_URL = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+engine = create_engine(DATABASE_URL)
+# UsersBase.metadata.create_all(engine)
+LocationsBase.metadata.create_all(engine)
+ParkingSpaces.metadata.create_all(engine)
+Transactions.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+
+def check_connection():
     try:
-        conn = psycopg2.connect(
-            host="localhost",
-            port="5432",
-            database="ParkingDB",
-            user="Note",
-            password="Love1234"
-        )
-        return conn
+        connection = engine.connect()
+        print("Connection to PostgreSQL was successful!")
+        connection.close()
     except Exception as e:
-        print(f"Error connecting to the database: {e}")
-        return None
+        print("Error occurred while connecting to PostgreSQL:", e)
