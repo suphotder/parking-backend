@@ -10,4 +10,5 @@ class Transactions(Base):
     entry_time = Column(Date, nullable=False)
     exit_time = Column(Date, nullable=False)
     license_plate = Column(String(50), nullable=False)
-    parking_spaces = relationship("ParkingSpaces", back_populates="parking_spaces")
+    
+    relationship("ParkingSpaces", back_populates="transactions")

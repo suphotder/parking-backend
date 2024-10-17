@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models.users import Base as UsersBase
 from models.locations import Base as LocationsBase
 from models.parking_spaces import Base as ParkingSpaces
 from models.transactions import Base as Transactions
@@ -12,7 +11,6 @@ POSTGRES_HOST = 'localhost'
 
 DATABASE_URL = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
 engine = create_engine(DATABASE_URL)
-# UsersBase.metadata.create_all(engine)
 LocationsBase.metadata.create_all(engine)
 ParkingSpaces.metadata.create_all(engine)
 Transactions.metadata.create_all(engine)

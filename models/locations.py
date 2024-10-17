@@ -8,4 +8,5 @@ class Locations(Base):
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String(50), nullable=False)
     total_spaces = Column(Integer, nullable=False)
-    parking_spaces = relationship("ParkingSpaces", back_populates="locations", cascade="all, delete-orphan")
+    
+    relationship("ParkingSpaces", back_populates="locations", cascade="all, delete-orphan")
