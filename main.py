@@ -1,7 +1,7 @@
-from flask import Flask
+from flask import Flask, jsonify, request
 from db import Session, check_connection
-from controllers.item import register_routes
-from services.location import insert_location,get_location_all
+from controllers.parking import register_parking_routes
+from services.location import insert_location, get_location_all
 from services.parking_space import insert_parking_space
 
 app = Flask(__name__)
@@ -30,11 +30,9 @@ if locations:
 else:
     print("No locations found.")
     
-
-
 session.close()
 
-register_routes(app)
+register_parking_routes(app)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)

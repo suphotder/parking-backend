@@ -10,3 +10,11 @@ class Locations(Base):
     total_spaces = Column(Integer, nullable=False)
     
     relationship("ParkingSpaces", back_populates="locations", cascade="all, delete-orphan")
+    
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "total_spaces": self.total_spaces
+        }
