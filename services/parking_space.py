@@ -37,10 +37,11 @@ def get_parking_space_vacant_id(id):
     session.close()
     return row
 
-def check_car_on_parking_space(license_plate):
+def check_car_on_parking_space(location_id, license_plate):
     session = Session()
     row = session.query(ParkingSpaces).filter(
-        ParkingSpaces.license_plate == license_plate,
+        ParkingSpaces.location_id == location_id,
+        ParkingSpaces.license_plate == license_plate
     ).first()    
     return row
         

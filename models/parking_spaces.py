@@ -8,7 +8,7 @@ class ParkingSpaces(Base):
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     location_id = Column(String(36), ForeignKey('locations.id'), nullable=False)
     number_spaces = Column(Integer, nullable=False)
-    license_plate = Column(String(50))
+    license_plate = Column(String(100))
     status = Column(String(50), nullable=False)
     
     relationship("Locations", back_populates="parking_spaces")
