@@ -1,4 +1,4 @@
-from flask import jsonify
+from sqlalchemy import func
 from models.parking_spaces import ParkingSpaces
 from db import Session
 import random
@@ -14,6 +14,19 @@ def insert_parking_space(location_id, number_spaces, license_plate, status):
     else:
         print(f"Inserted ParkingSpaces already")
     session.close()
+    
+def get_parking_space_location_id(location_id):
+    with Session() as session:
+        rows = session.query(ParkingSpaces).filter(ParkingSpaces.location_id==location_id).all()
+        parked_count = session.query(
+            func.count(ParkingSpaces.id).label('parked_count')
+        ).filter(
+            ParkingSpaces.status == "not vacant",
+            ParkingSpaces.location_id == location_id
+        ).scalar()
+
+        print(parked_count)
+        return rows , parked_count
     
 def get_parking_space_vacant_id(id):
     session = Session()

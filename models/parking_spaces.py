@@ -13,3 +13,12 @@ class ParkingSpaces(Base):
     
     relationship("Locations", back_populates="parking_spaces")
     relationship("Transactions", back_populates="parking_spaces", cascade="all, delete-orphan")
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "location_id": self.location_id,
+            "number_spaces": self.number_spaces,
+            "license_plate": self.license_plate,
+            "status": self.status
+        }

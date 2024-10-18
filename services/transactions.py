@@ -30,10 +30,15 @@ def insert_transaction(data):
                 license_plate = data['license_plate']
                 parking_space = check_car_on_parking_space(license_plate)
                 transaction = get_transaction_license_plate(parking_space.id, license_plate)
+                now = datetime.now() 
+                elapsed_time = now - transaction.on_time
+                minutes_elapsed = elapsed_time.total_seconds() / 60
                 session.query(Transactions).filter(Transactions.parking_spaces_id==parking_space.id, Transactions.license_plate == license_plate).update({
-                    Transactions.out_time: iso_format
+                    Transactions.out_time: iso_format,
+                    Transactions.amount: minutes_elapsed
                 })
                 session.commit()
+                transaction = get_transaction_id(transaction.id)
                 update_status_parking_space(parking_space.id, None, "vacant")
                 return Response(status=200, message="Success.", data=transaction.to_dict())
             finally:
@@ -47,6 +52,14 @@ def get_transaction_license_plate(parking_spaces_id, license_plate):
     session = Session()
     row = session.query(Transactions).filter(
             Transactions.parking_spaces_id==parking_spaces_id, Transactions.license_plate == license_plate 
+        ).first()        
+    session.close()
+    return row
+
+def get_transaction_id(id):
+    session = Session()
+    row = session.query(Transactions).filter(
+            Transactions.id==id 
         ).first()        
     session.close()
     return row
