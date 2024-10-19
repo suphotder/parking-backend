@@ -9,14 +9,13 @@ class ParkingDataProvider extends ChangeNotifier {
   ParkingDataModel get getParkingData => parkingDataModel;
   void updateParkingData(d) {
     parkingDataModel = d;
-    notifyListeners();
   }
 
-  Future<void> fetchParkingData() async {
+  Future<void> fetchParkingData(locationId) async {
     isParkingDataLoading = true;
     notifyListeners();
     try {
-      final res = await fetchParkingDataServices();
+      final res = await fetchParkingDataServices(locationId);
       updateParkingData(res);
     } catch (error) {
       print('Error fetching parking: $error');

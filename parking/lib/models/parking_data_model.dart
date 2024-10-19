@@ -1,5 +1,5 @@
 class ParkingDataModel {
-  List<Data>? data;
+  List<ParkingData>? data;
   int? parked;
   int? total;
 
@@ -7,9 +7,9 @@ class ParkingDataModel {
 
   ParkingDataModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <ParkingData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new ParkingData.fromJson(v));
       });
     }
     parked = json['parked'];
@@ -27,21 +27,21 @@ class ParkingDataModel {
   }
 }
 
-class Data {
+class ParkingData {
   String? id;
   String? licensePlate;
   String? locationId;
   int? numberSpaces;
   String? status;
 
-  Data(
+  ParkingData(
       {this.id,
       this.licensePlate,
       this.locationId,
       this.numberSpaces,
       this.status});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ParkingData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     licensePlate = json['license_plate'];
     locationId = json['location_id'];

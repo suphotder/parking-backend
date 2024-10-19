@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parking/providers/location_provider.dart';
 import 'package:parking/providers/parking_data_provider.dart';
 import 'package:parking/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,10 @@ void main() {
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(
-        create: (context) => ParkingDataProvider()..fetchParkingData(),
+        create: (context) => LocationProvider()..fetchLocation(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ParkingDataProvider(),
       ),
     ], child: const MyApp()),
   );

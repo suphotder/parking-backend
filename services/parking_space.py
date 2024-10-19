@@ -17,15 +17,13 @@ def insert_parking_space(location_id, number_spaces, license_plate, status):
     
 def get_parking_space_location_id(location_id):
     with Session() as session:
-        rows = session.query(ParkingSpaces).filter(ParkingSpaces.location_id==location_id).all()
+        rows = session.query(ParkingSpaces).filter(ParkingSpaces.location_id==location_id).order_by(ParkingSpaces.number_spaces).all()
         parked_count = session.query(
             func.count(ParkingSpaces.id).label('parked_count')
         ).filter(
             ParkingSpaces.status == "not vacant",
             ParkingSpaces.location_id == location_id
         ).scalar()
-
-        print(parked_count)
         return rows , parked_count
     
 def get_parking_space_vacant_id(id):
@@ -33,7 +31,7 @@ def get_parking_space_vacant_id(id):
     row = session.query(ParkingSpaces).filter(
             ParkingSpaces.id == id, 
             ParkingSpaces.status == "vacant"  
-        ).first()        
+        ).first()
     session.close()
     return row
 
