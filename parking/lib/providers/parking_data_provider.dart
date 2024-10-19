@@ -4,7 +4,7 @@ import 'package:parking/services/parking_service.dart';
 
 class ParkingDataProvider extends ChangeNotifier {
   ParkingDataModel parkingDataModel = ParkingDataModel();
-  bool isParkingDataLoading = false;
+  bool isLoading = false;
 
   ParkingDataModel get getParkingData => parkingDataModel;
   void updateParkingData(d) {
@@ -12,7 +12,7 @@ class ParkingDataProvider extends ChangeNotifier {
   }
 
   Future<void> fetchParkingData(locationId) async {
-    isParkingDataLoading = true;
+    isLoading = true;
     notifyListeners();
     try {
       final res = await fetchParkingDataServices(locationId);
@@ -21,7 +21,7 @@ class ParkingDataProvider extends ChangeNotifier {
     } catch (error) {
       print('Error fetching parking: $error');
     } finally {
-      isParkingDataLoading = false;
+      isLoading = false;
       notifyListeners();
     }
   }

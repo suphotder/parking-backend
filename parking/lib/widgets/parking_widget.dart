@@ -11,7 +11,7 @@ class ParkingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (parkingData.isParkingDataLoading) {
+    if (parkingData.isLoading) {
       return Text("Loading....");
     } else {
       if (parkingData.getParkingData.data != null) {

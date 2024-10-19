@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:parking/models/parking_data_model.dart';
 import 'package:parking/providers/location_provider.dart';
 import 'package:parking/providers/parking_data_provider.dart';
+import 'package:parking/providers/transaction_provider.dart';
 import 'package:parking/widgets/control_widget.dart';
 import 'package:parking/widgets/select_widget.dart';
 import 'package:parking/widgets/info_widget.dart';
@@ -25,33 +26,43 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Consumer<ParkingDataProvider>(
-                builder: (context, value, child) {
-                  return ParkingWidget(parkingData: value);
-                },
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              Expanded(
+                child: Consumer<ParkingDataProvider>(
+                  builder: (context, value, child) {
+                    return ParkingWidget(parkingData: value);
+                  },
+                ),
               ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  Consumer<LocationProvider>(
-                    builder: (context, value, child) {
-                      return SelectWidget(location: value);
-                    },
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Expanded(
-                    child: ControlWidget(),
-                  ),
-                ],
+              SizedBox(
+                height: 12,
               ),
-            )
-          ],
+              Expanded(
+                child: Column(
+                  children: [
+                    Consumer<LocationProvider>(
+                      builder: (context, value, child) {
+                        return SelectWidget(location: value);
+                      },
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Expanded(
+                      child: Consumer<TransactionProvider>(
+                        builder: (context, value, child) {
+                          return ControlWidget(transaction: value);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
