@@ -70,31 +70,28 @@ def get_transaction_service_fee(location_id, license_plate):
         session.close()
         
 def get_transaction_unpaid(transaction_id):
-    session = Session()
-    row = session.query(Transactions).filter(
-            Transactions.id == transaction_id,
-            Transactions.payment_status == "unpaid"
-        ).first()        
-    session.close()
-    return row
+    with Session() as session:
+        row = session.query(Transactions).filter(
+                Transactions.id == transaction_id,
+                Transactions.payment_status == "unpaid"
+            ).first()        
+        return row
     
 def get_transaction_out_time(parking_spaces_id, license_plate):
-    session = Session()
-    row = session.query(Transactions).filter(
-            Transactions.parking_spaces_id == parking_spaces_id,
-            Transactions.license_plate == license_plate
-        ).first()        
-    session.close()
-    return row
+    with Session() as session:
+        row = session.query(Transactions).filter(
+                Transactions.parking_spaces_id == parking_spaces_id,
+                Transactions.license_plate == license_plate
+            ).first()        
+        return row
 
 def get_transaction_id(id):
-    session = Session()
-    row = session.query(Transactions).filter(
-            Transactions.id==id 
-        ).first()        
-    session.close()
-    return row
-    
+    with Session() as session:
+        row = session.query(Transactions).filter(
+                Transactions.id==id 
+            ).first()        
+        return row
+        
 def is_car_on_parking_space(location_id, license_plate):
     row = check_car_on_parking_space(location_id, license_plate)
     if row is None:
