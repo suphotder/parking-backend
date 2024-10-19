@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:parking/models/custom_exception.dart';
 import 'package:parking/models/location_model.dart';
 import 'package:parking/models/parking_data_model.dart';
 import 'package:parking/models/transaction/transaction_req_model.dart';
@@ -22,7 +23,7 @@ Future<List<LocationModel>> fetchLocationServices() async {
           return model;
         } catch (e) {
           print("[Error]:$e");
-          rethrow;
+          throw e;
         }
       default:
         throw Exception(response.reasonPhrase);
@@ -40,6 +41,7 @@ Future<ParkingDataModel> fetchParkingDataServices(locationId) async {
       'Content-Type': 'application/json; charset=UTF-8',
     };
     final response = await http.get(url, headers: headers);
+    await Future.delayed(Duration(seconds: 1), () {});
     switch (response.statusCode) {
       case 200:
         try {
@@ -48,7 +50,7 @@ Future<ParkingDataModel> fetchParkingDataServices(locationId) async {
           return model;
         } catch (e) {
           print("[Error]:$e");
-          rethrow;
+          throw e;
         }
       default:
         throw Exception(response.reasonPhrase);
@@ -67,20 +69,24 @@ Future<TransactionResModel> fetchTransactionService(
     };
     final response =
         await http.post(url, headers: headers, body: jsonEncode(body));
+    await Future.delayed(Duration(seconds: 1), () {});
     switch (response.statusCode) {
       case 200:
         try {
-          TransactionResModel model =
-              TransactionResModel.fromJson(jsonDecode(response.body));
-          return model;
+          return TransactionResModel.fromJson(jsonDecode(response.body));
         } catch (e) {
-          print("[Error]:$e");
-          rethrow;
+          throw CustomException("Failed to parse response");
         }
       default:
-        throw Exception(response.reasonPhrase);
+        var errorResponse = jsonDecode(response.body);
+        throw CustomException(
+          errorResponse['error'] ?? 'Unknown error occurred',
+          statusCode: response.statusCode,
+        );
     }
   } on SocketException catch (_) {
+    throw CustomException("Network error: Please check your connection");
+  } catch (e) {
     rethrow;
   }
 }

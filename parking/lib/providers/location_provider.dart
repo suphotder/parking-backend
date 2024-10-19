@@ -25,7 +25,7 @@ class LocationProvider extends ChangeNotifier {
       final res = await fetchLocationServices();
       updateLocationList(res);
     } catch (error) {
-      print('Error fetching parking: $error');
+      throw error;
     } finally {
       isLoading = false;
       notifyListeners();

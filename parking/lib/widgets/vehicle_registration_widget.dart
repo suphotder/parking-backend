@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:parking/utils/constants.dart';
@@ -29,7 +30,11 @@ class VehicleRegistrationWidget extends StatelessWidget {
               onChangedNumber(val);
             },
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.grey,
+                ),
+              ),
               labelText: 'Enter number',
             ),
           ),
@@ -38,33 +43,46 @@ class VehicleRegistrationWidget extends StatelessWidget {
           width: 12,
         ),
         Container(
-          constraints: BoxConstraints(
-            maxWidth: 150,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,
+            ),
+            borderRadius: BorderRadius.circular(3),
           ),
-          child: DropdownSearch<String>(
-            key: dropDownKey,
-            selectedItem: null,
-            items: (filter, infiniteScrollProps) => provinceList,
+          child: DropdownButton2(
+            dropdownStyleData: const DropdownStyleData(
+              scrollPadding: EdgeInsets.only(left: 12, right: 0),
+            ),
+            menuItemStyleData: const MenuItemStyleData(
+              padding: EdgeInsets.zero,
+            ),
+            alignment: Alignment.center,
+            underline: SizedBox.shrink(),
+            hint: Text(
+              'Select location',
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 16,
+              ),
+            ),
+            items: provinceList
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ))
+                .toList(),
+            value: selectProvince != "" ? selectProvince : null,
             onChanged: (val) {
               onChangedProvince(val);
             },
-            decoratorProps: DropDownDecoratorProps(
-              decoration: InputDecoration(
-                labelText: 'Province',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            popupProps: PopupProps.menu(
-              fit: FlexFit.loose,
-              constraints: BoxConstraints(),
-              showSearchBox: true,
-              searchFieldProps: TextFieldProps(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Search",
-                ),
-              ),
-            ),
           ),
         ),
       ],

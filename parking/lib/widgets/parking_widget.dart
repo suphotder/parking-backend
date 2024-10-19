@@ -67,7 +67,7 @@ class ParkingWidget extends StatelessWidget {
                 ],
               )
             : Center(
-                child: Text("Emtry data"),
+                child: Text("Empty"),
               );
       } else {
         return Text("Empty");
