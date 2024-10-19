@@ -42,6 +42,13 @@ def check_car_on_parking_space(location_id, license_plate):
         ParkingSpaces.license_plate == license_plate
     ).first()    
     return row
+
+def check_car_on_parking_space_all(license_plate):
+    session = Session()
+    row = session.query(ParkingSpaces).filter(
+        ParkingSpaces.license_plate == license_plate
+    ).all()    
+    return row
         
 def get_parking_space_vacant_random(data):
     session = Session()

@@ -1,6 +1,6 @@
 from models.transactions import Transactions
 from models.response import Response
-from services.parking_space import update_status_parking_space, check_car_on_parking_space, get_parking_space_vacant_random
+from services.parking_space import update_status_parking_space, check_car_on_parking_space, get_parking_space_vacant_random, check_car_on_parking_space_all
 from db import Session
 from datetime import datetime
 import pytz
@@ -14,7 +14,7 @@ def insert_transaction(data):
     location_id = data['location_id']
     license_plate = data['license_plate']
     if data['type'] == "on":
-        if is_car_on_parking_space(location_id, license_plate) == False:
+        if is_car_on_parking_space_all(license_plate) == False:
             try:
                 parking_space = get_parking_space_vacant_random(data)
                 transaction = Transactions(parking_spaces_id=parking_space.id, license_plate=license_plate, on_time=iso_format, payment_status="unpaid")
@@ -25,7 +25,7 @@ def insert_transaction(data):
             finally:
                 session.close()
         else:
-            return Response(status=500, message="This license plate is already parked.")
+            return Response(status=500, message="This license plate already exists.")
     elif data['type'] == "out":
         if is_car_on_parking_space(location_id, license_plate):
             try:
@@ -43,7 +43,7 @@ def insert_transaction(data):
             finally:
                 session.close()
         else:
-            return Response(status=500, message="This license plate is not parked.")
+            return Response(status=500, message="This license plate does not exist.")
     else:
         return Response(status=500, message="This transaction is not available.")
     
@@ -100,5 +100,14 @@ def is_car_on_parking_space(location_id, license_plate):
     if row is None:
         return False
     else:
+        return True
+    
+def is_car_on_parking_space_all(license_plate):
+    rows = check_car_on_parking_space_all(license_plate)
+    if not rows:
+        print("False")
+        return False
+    else:
+        print("True")
         return True
         
