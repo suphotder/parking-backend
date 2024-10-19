@@ -16,6 +16,7 @@ class ParkingDataProvider extends ChangeNotifier {
     notifyListeners();
     try {
       final res = await fetchParkingDataServices(locationId);
+      await Future.delayed(Duration(seconds: 1), () {});
       updateParkingData(res);
     } catch (error) {
       print('Error fetching parking: $error');

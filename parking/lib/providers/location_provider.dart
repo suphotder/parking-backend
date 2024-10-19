@@ -23,7 +23,6 @@ class LocationProvider extends ChangeNotifier {
     notifyListeners();
     try {
       final res = await fetchLocationServices();
-      print("jsonData ${res}");
       updateLocationList(res);
     } catch (error) {
       print('Error fetching parking: $error');
