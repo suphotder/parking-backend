@@ -2,7 +2,7 @@
 
 ## Run PostgreSQL
 - Start docker
-- Open opject and open terminal
+- Open project and open terminal
 ```frontend
 docker-compose -f dev.yml up
 ```
