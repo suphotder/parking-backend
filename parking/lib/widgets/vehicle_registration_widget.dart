@@ -59,7 +59,7 @@ class VehicleRegistrationWidget extends StatelessWidget {
             alignment: Alignment.center,
             underline: SizedBox.shrink(),
             hint: Text(
-              'Select location',
+              'Select province',
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.normal,
