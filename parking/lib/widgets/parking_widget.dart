@@ -12,7 +12,9 @@ class ParkingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (parkingData.isLoading) {
-      return Text("Loading....");
+      return Center(
+        child: Text("Loading...."),
+      );
     } else {
       if (parkingData.getParkingData.data != null) {
         ParkingDataModel parkingDataModel = parkingData.getParkingData;
@@ -70,7 +72,9 @@ class ParkingWidget extends StatelessWidget {
                 child: Text("Empty"),
               );
       } else {
-        return Text("Empty");
+        return Center(
+          child: Text("Please select a location."),
+        );
       }
     }
   }
