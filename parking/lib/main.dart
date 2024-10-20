@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parking/providers/location_provider.dart';
 import 'package:parking/providers/parking_data_provider.dart';
+import 'package:parking/providers/service_fee_provider.dart';
 import 'package:parking/providers/transaction_provider.dart';
 import 'package:parking/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => TransactionProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ServiceFeeProvider(),
       ),
     ], child: const MyApp()),
   );

@@ -8,7 +8,8 @@ import 'package:parking/services/parking_service.dart';
 class TransactionProvider extends ChangeNotifier {
   VehicleRegistrationModel vehicleReg = VehicleRegistrationModel();
   TransactionResModel transactionRes = TransactionResModel();
-  bool isLoading = false;
+  bool isLoadingIn = false;
+  bool isLoadingOut = false;
 
   String get getNumberIn => vehicleReg.getNumberIn;
   void updateNumberIn(s) {
@@ -34,9 +35,15 @@ class TransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get getIsLoading => isLoading;
-  void updateIsLoading(b) {
-    isLoading = b;
+  bool get getIsLoadingIn => isLoadingIn;
+  void updateIsLoadingIn(b) {
+    isLoadingIn = b;
+    notifyListeners();
+  }
+
+  bool get getIsLoadingOut => isLoadingOut;
+  void updateIsLoadingOut(b) {
+    isLoadingOut = b;
     notifyListeners();
   }
 
@@ -48,13 +55,13 @@ class TransactionProvider extends ChangeNotifier {
 
   Future<void> fetchTransaction(TransactionReqModel body) async {
     try {
-      updateIsLoading(true);
+      body.type == "on" ? updateIsLoadingIn(true) : updateIsLoadingOut(true);
       final res = await fetchTransactionService(body);
       updateTransactionRes(res);
     } on CustomException catch (e) {
       throw e;
     } finally {
-      updateIsLoading(false);
+      body.type == "on" ? updateIsLoadingIn(false) : updateIsLoadingOut(false);
     }
   }
 }

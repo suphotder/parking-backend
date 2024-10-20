@@ -90,3 +90,34 @@ Future<TransactionResModel> fetchTransactionService(
     rethrow;
   }
 }
+
+Future<TransactionResModel> fetchServiceFeeService(
+    TransactionReqModel body) async {
+  try {
+    final url = Uri.parse("http://127.0.0.1:5000/parking/service-fee");
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    final response =
+        await http.post(url, headers: headers, body: jsonEncode(body));
+    await Future.delayed(Duration(seconds: 1), () {});
+    switch (response.statusCode) {
+      case 200:
+        try {
+          return TransactionResModel.fromJson(jsonDecode(response.body));
+        } catch (e) {
+          throw CustomException("Failed to parse response");
+        }
+      default:
+        var errorResponse = jsonDecode(response.body);
+        throw CustomException(
+          errorResponse['error'] ?? 'Unknown error occurred',
+          statusCode: response.statusCode,
+        );
+    }
+  } on SocketException catch (_) {
+    throw CustomException("Network error: Please check your connection");
+  } catch (e) {
+    rethrow;
+  }
+}
