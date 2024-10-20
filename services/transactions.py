@@ -54,6 +54,8 @@ def get_transaction_service_fee(location_id, license_plate):
         current_datetime_with_tz = datetime.now(bangkok_tz)
         iso_format = current_datetime_with_tz.isoformat()
         parking_space = check_car_on_parking_space(location_id, license_plate)
+        if parking_space is None:
+            return Response(status=500, message="This license plate does not exist.")
         transaction = get_transaction_out_time(parking_space.id, license_plate)
         if transaction.out_time == None:
             now = datetime.now() 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:parking/models/custom_exception.dart';
 import 'package:parking/models/transaction/transaction_req_model.dart';
 import 'package:parking/providers/location_provider.dart';
 import 'package:parking/providers/service_fee_provider.dart';
 import 'package:parking/providers/transaction_provider.dart';
+import 'package:parking/widgets/util_widget.dart';
 import 'package:provider/provider.dart';
 
 class ServiceFeeWidget extends StatelessWidget {
@@ -31,13 +33,20 @@ class ServiceFeeWidget extends StatelessWidget {
                     transaction.getNumberOut != "" &&
                     transaction.getProvinceOut != "" &&
                     !serviceFee.isLoading
-                ? () {
+                ? () async {
                     TransactionReqModel reqModel = TransactionReqModel(
                       locationId: locationId,
                       licensePlate:
                           "${transaction.getNumberOut}:${transaction.getProvinceOut}",
                     );
-                    serviceFee.fetchServiceFee(reqModel);
+                    await serviceFee.fetchServiceFee(reqModel).then(
+                      (val) {},
+                      onError: (err) {
+                        if (err is CustomException) {
+                          dialogAlert(context, true, err.message);
+                        }
+                      },
+                    );
                   }
                 : null,
             child: Text(!serviceFee.isLoading ? "Service fee" : "Loading..."),
