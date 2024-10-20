@@ -18,5 +18,6 @@ python3 main.py
 - Open new terminal
 ```frontend
 cd parking
+flutter pub get
 flutter run -d chrome
 ```
