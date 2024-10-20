@@ -13,6 +13,8 @@ python3 -m venv .venv
 pip install -r requirements.txt
 python3 main.py 
 ```
+> **Note:** my Python version use v3.13.0
+
 # How to run Front-End
 - Connect to the Internet
 - Open new terminal
@@ -21,6 +23,8 @@ cd parking
 flutter pub get
 flutter run -d chrome
 ```
+> **Note:** my Flutter version use v3.24.3
+
 # How to use the program
 ## Enter the parking lot
 - Click dropdown
