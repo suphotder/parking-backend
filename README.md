@@ -1,15 +1,22 @@
-# How to
+# How to run Back-End
 
-
-# สำหรับ MacOS/Linux
-
-source .venv/bin/activate
-
+## Run PostgreSQL
+- Start docker
+- Open opject and open terminal
+```frontend
+docker-compose -f dev.yml up
+```
+## Run parking-backend
+- Open new terminal
+```frontend
+python3 -m venv .venv
 pip install -r requirements.txt
-
-# Flutter
-
-flutter config --enable-macos-desktop
-open -a Simulator
-flutter run
-flutter run -d macos
+python3 main.py 
+```
+# How to run Front-End
+- Connect to the Internet
+- Open new terminal
+```frontend
+cd parking
+flutter run -d chrome
+```
