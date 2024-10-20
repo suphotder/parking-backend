@@ -21,3 +21,15 @@ cd parking
 flutter pub get
 flutter run -d chrome
 ```
+# How to use the program
+- Click dropdown
+<div align="center">
+  <img src="./assets/Screenshot1" alt="Project screenshot" width="80%">
+</div>
+- Select location
+<div align="center">
+  <img src="./assets/Screenshot2.png" alt="Project screenshot" width="80%">
+</div>
+<div align="center">
+  <img src="./assets/Screenshot3.png" alt="Project screenshot" width="80%">
+</div>
