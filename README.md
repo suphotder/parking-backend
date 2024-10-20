@@ -15,6 +15,43 @@ python3 main.py
 ```
 > **Note:** my Python version use v3.13.0
 
+## API
+- Get location
+```frontend
+curl --location 'http://127.0.0.1:5000/parking/location'
+```
+- Enter the parking lot
+```frontend
+curl --location 'http://127.0.0.1:5000/parking/transaction' \
+--header 'Content-Type: application/json' \
+--data '{
+    "location_id": "bed736de-62ed-4962-881e-cbff61e08fe4",
+    "license_plate": "ชด888:บึงกาฬ",
+    "type": "on"
+}'
+```
+
+- Get service fee
+```frontend
+curl --location 'http://127.0.0.1:5000/parking/service-fee' \
+--header 'Content-Type: application/json' \
+--data '{
+    "location_id": "bed736de-62ed-4962-881e-cbff61e08fe4",
+    "license_plate": "ชด888:บึงกาฬ"
+}'
+```
+- Exit the parking lot
+```frontend
+curl --location 'http://127.0.0.1:5000/parking/transaction' \
+--header 'Content-Type: application/json' \
+--data '{
+    "location_id": "bed736de-62ed-4962-881e-cbff61e08fe4",
+    "transaction_id": "0a0d4f28-0517-447a-bc86-956db3b8b4af",
+    "license_plate": "ชด888:บึงกาฬ",
+    "type": "out"
+}'
+```
+
 # How to run Front-End
 - Connect to the Internet
 - Open new terminal
