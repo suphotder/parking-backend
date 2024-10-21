@@ -20,7 +20,7 @@ python3 main.py
 ```frontend
 curl --location 'http://127.0.0.1:5000/parking/location'
 ```
-- Get ยarking space
+- Get parking space
 ```frontend
 curl --location 'http://127.0.0.1:5000/parking/space?locationId=bed736de-62ed-4962-881e-cbff61e08fe4'
 ```
