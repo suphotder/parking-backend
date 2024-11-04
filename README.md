@@ -10,6 +10,7 @@ docker-compose -f dev.yml up
 - Open new terminal
 ```frontend
 python3 -m venv .venv
+brew install postgresql@16
 pip install -r requirements.txt
 python3 main.py 
 ```
